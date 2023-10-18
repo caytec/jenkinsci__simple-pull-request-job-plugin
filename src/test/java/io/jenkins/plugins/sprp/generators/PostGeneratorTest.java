@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.jvnet.hudson.test.For;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class PostGeneratorTest {
                 "cleanup:\n" +
                 "  - sh: \"cleanup.sh\"\n";
 
-        Yaml yaml = new Yaml();
+        Yaml yaml = new Yaml(new SafeConstructor());
         Post postSection = yaml.loadAs(postYaml, Post.class);
 
         String pipelineStepActual = PipelineGenerator.autoAddTabs((ArrayList<String>) generator.toPipeline(postSection));
